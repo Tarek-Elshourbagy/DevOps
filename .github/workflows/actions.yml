@@ -18,3 +18,18 @@ jobs:
             - name: Run tests           ## tests
               run: pytest
 
+    build-and-push:
+        needs: [test]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4 ## code generated
+
+            - name: Build and Push Docker Container          ## python
+              run: |
+                docker build -t tarekelshourbagy22/devops .
+                    echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u tarekelshourbagy22 --password-stdin
+                    docker push tarekelshourbagy22/devops
+
+
+
+
